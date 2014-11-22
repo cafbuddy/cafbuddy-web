@@ -1,0 +1,23 @@
+{
+  "name": "cafbuddy-web",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Caf Buddy Web Interface",
+  "main": "app/app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cafbuddy/web"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cafbuddy/web/issues"
+  },
+  "homepage": "https://github.com/cafbuddy/web",
+  "dependencies": {
+    "mocha": "^2.0.1"
+  }
+}
