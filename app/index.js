@@ -12,27 +12,17 @@ import {Route, DefaultRoute} from 'react-router'
 import App       from './views/app'
 import Auth      from './views/auth'
 import Create    from './views/create'
-import Game      from './views/game'
-import GamesList from './views/games-list'
-import Help      from './views/help'
-import Home      from './views/home'
-import Profile   from './views/profile'
-import Rules     from './views/rules'
-import Search    from './views/search'
-import Tutorial  from './views/tutorial'
+import Meal      from './views/meal'
+import Meals     from './views/meals'
+import Settings  from './views/settings'
 
 let routes = (
 	React.createElement(Route, {handler: App, name: 'App', path: "/"},
-		React.createElement(DefaultRoute, {handler: Home, name: 'home'}),
-		React.createElement(Route, {handler: GamesList, name: 'games'}),
+		React.createElement(DefaultRoute, {handler: Meals, name: 'meals'}),
 		React.createElement(Route, {handler: Auth, name: 'sign-up'}),
 		React.createElement(Route, {handler: Auth, name: 'sign-in'}),
-		React.createElement(Route, {handler: Game, name: 'game', path: 'game/:gameId'}),
-		React.createElement(Route, {handler: Profile, name: 'profile'}),
-		React.createElement(Route, {handler: Search, name: 'search'}),
-		React.createElement(Route, {handler: Help, name: 'help'}),
-		React.createElement(Route, {handler: Rules, name: 'rules', path: 'help/rules'}),
-		React.createElement(Route, {handler: Tutorial, name: 'tutorial', path: 'help/tutorial'}),
+		React.createElement(Route, {handler: Meal, name: 'meal', path: 'meal/:mealId'}),
+		React.createElement(Route, {handler: Settings, name: 'settings'}),
 		React.createElement(Route, {handler: Create, name: 'create'})))
 
 Router.run(routes, (Handler) => {

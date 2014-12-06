@@ -31,13 +31,11 @@ let Header = React.createClass({
 	},
 
 	render() {
-		let home = [React.createElement('li', {key: 'home'}, Link({to: "home"}, Octicon({icon: 'home'})))]
 
 		let loggedInMenuItems = [
-			React.createElement('li', {key: 'profile'}, Link({to: "profile"}, Octicon({icon: 'person'}))),
-			React.createElement('li', {key: 'search'},  Link({to: "search"},  Octicon({icon: 'search'}))),
-			React.createElement('li', {key: 'help'},    Link({to: "help"},    Octicon({icon: 'question'}))),
-			React.createElement('li', {key: 'create'},  Link({to: "create"},  Octicon({icon: 'plus'})))
+			React.createElement('li', {key: 'home'}, Link({to: "meals"}, Octicon({icon: 'home'}))),
+			React.createElement('li', {key: 'create'},  Link({to: "create"},  Octicon({icon: 'plus'}))),
+			React.createElement('li', {key: 'settings'}, Link({to: "settings"}, Octicon({icon: 'settings'}))),
 		]
 
 		let loggedOutMenuItems = [
@@ -45,7 +43,7 @@ let Header = React.createClass({
 			React.createElement('li', {key: 'sign-up'}, Link({to: "sign-up"}, Octicon({icon: 'squirrel'}), ' Sign Up'))
 		]
 
-		let menuItems = home.concat(this.state.isSignedIn ? loggedInMenuItems : loggedOutMenuItems)
+		let menuItems = this.state.isSignedIn ? loggedInMenuItems : loggedOutMenuItems
 
 		return React.createElement('header', {id: 'header'},
 			React.createElement('h1', null, 'CafBuddy'),

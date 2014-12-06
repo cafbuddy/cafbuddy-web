@@ -5,10 +5,8 @@
 	padding: 0;
 }
 
-.game-list {
-	& > ul {
-		@include table-view;
-	}
+.meal-list {
+	@include table-view;
 
 	a {
 		min-height: 48px;
@@ -23,7 +21,7 @@
 		border-top: solid 1px;
 	}
 
-	.game-title {
+	.starts, .ends {
 		flex: 1;
 	}
 
