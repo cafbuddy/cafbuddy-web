@@ -12,12 +12,14 @@ let Meals = React.createClass({
 		}
 	},
 	componentWillRecieveProps(nextProps) {
-		Parse.Cloud.run('getMealsToday',
-			{objectID: Parse.User.current().id}
-		).then((results) => {
-			this.setState({upcomingMeals: JSON.parse(results)})
-			window.meals = JSON.parse(results)
-		})
+		if (Parse.User.current()) {
+			Parse.Cloud.run('getMealsToday',
+				{objectID: Parse.User.current().id}
+			).then((results) => {
+				this.setState({upcomingMeals: JSON.parse(results)})
+				window.meals = JSON.parse(results)
+			})
+		}
 	},
 	componentWillMount() {
 		this.componentWillRecieveProps(this.props)
