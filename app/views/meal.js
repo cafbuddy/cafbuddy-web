@@ -42,7 +42,7 @@ let Meal = React.createClass({
 			{id: 'meal'},
 			title,
 			msgs)
-	}
+	},
 })
 
 export default Meal

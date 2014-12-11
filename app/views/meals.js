@@ -1,46 +1,50 @@
 import * as React from 'react'
+import * as Reflux from 'reflux'
 import * as _ from 'lodash'
 import * as moment from 'moment'
-import {currentUser} from '../helpers/auth'
+import userStore from '../stores/userStore'
 import List from '../components/list'
 
 let Meals = React.createClass({
+	mixins: [Reflux.listenTo(userStore, 'onUserChanged', 'onUserChanged')],
 	getInitialState() {
 		return {
+			user: undefined,
 			upcomingMeals: [],
 			pendingMatches: [],
 		}
 	},
-	componentWillRecieveProps(nextProps) {
-		if (Parse.User.current()) {
-			Parse.Cloud.run('getMealsToday',
-				{objectID: Parse.User.current().id}
-			).then((results) => {
-				this.setState({upcomingMeals: JSON.parse(results)})
-				window.meals = JSON.parse(results)
-			})
-		}
+	onUserChanged(user) {
+		this.setState({user})
+		this.findMeals()
 	},
-	componentWillMount() {
-		this.componentWillRecieveProps(this.props)
+	findMeals() {
+		if (this.state.user) {
+			Parse.Cloud.run('getMealsToday', {objectID: this.state.user.id})
+				.then((results) => {
+					results = JSON.parse(results)
+					this.setState({upcomingMeals: results})
+					window.meals = results
+				})
+		}
 	},
 	render() {
 		let upcomingMealElements = React.createElement(List, {
 			title: 'Upcoming Meals',
 			list: this.state.upcomingMeals,
-			errorMessage: "No items.",
+			errorMessage: 'No items.',
 		})
 
 		let pendingMatchElements = React.createElement(List, {
 			title: 'Pending Matches',
 			list: this.state.pendingMatches,
-			errorMessage: "No items.",
+			errorMessage: 'No items.',
 		})
 
 		return React.createElement('div', {id: 'meals'},
 			upcomingMealElements,
 			pendingMatchElements)
-	}
+	},
 })
 
 export default Meals

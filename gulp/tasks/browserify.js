@@ -9,20 +9,21 @@
 */
 
 var browserify   = require('browserify');
-var watchify     = require('watchify');
+var buffer       = require('vinyl-buffer');
 var bundleLogger = require('../util/bundleLogger');
+var config       = require('../config').browserify;
 var gulp         = require('gulp');
 var handleErrors = require('../util/handleErrors');
 var source       = require('vinyl-source-stream');
-var config       = require('../config').browserify;
+var sourcemaps   = require('gulp-sourcemaps');
+var uglify       = require('gulp-uglify');
+var watchify     = require('watchify');
 var to5Browserify = require('6to5-browserify');
 
 gulp.task('browserify', function(callback) {
-
 	var bundleQueue = config.bundleConfigs.length;
 
 	var browserifyThis = function(bundleConfig) {
-
 		var bundler = browserify({
 			// Required watchify args
 			cache: {}, packageCache: {}, fullPaths: true,
@@ -34,7 +35,7 @@ gulp.task('browserify', function(callback) {
 			debug: config.debug,
 		});
 
-		bundler.transform('6to5-browserify');
+		bundler.transform(to5Browserify);
 
 		var bundle = function() {
 			// Log when bundling starts
@@ -48,12 +49,17 @@ gulp.task('browserify', function(callback) {
 				// stream gulp compatible. Specifiy the
 				// desired output filename here.
 				.pipe(source(bundleConfig.outputName))
+				// Turn on sourcemaps
+				// .pipe(buffer())
+				// .pipe(sourcemaps.init({loadMaps: true}))
+				// .pipe(uglify())
+				// .pipe(sourcemaps.write('.'))
 				// Specify the output destination
 				.pipe(gulp.dest(bundleConfig.dest))
 				.on('end', reportFinished);
 		};
 
-		if(global.isWatching) {
+		if (global.isWatching) {
 			// Wrap with watchify and rebundle on changes
 			bundler = watchify(bundler);
 			// Rebundle on update
@@ -64,9 +70,9 @@ gulp.task('browserify', function(callback) {
 			// Log when bundling completes
 			bundleLogger.end(bundleConfig.outputName)
 
-			if(bundleQueue) {
+			if (bundleQueue) {
 				bundleQueue--;
-				if(bundleQueue === 0) {
+				if (bundleQueue === 0) {
 					// If queue is empty, tell gulp the task is complete.
 					// https://github.com/gulpjs/gulp/blob/master/docs/API.md#accept-a-callback
 					callback();

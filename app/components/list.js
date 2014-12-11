@@ -24,7 +24,7 @@ let List = React.createClass({
 		return React.createElement('section', {className: 'list'},
 			title,
 			_.isEmpty(this.props.list) ? this.props.errorMessage : listOfThings)
-	}
+	},
 })
 
 export default List

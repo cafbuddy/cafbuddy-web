@@ -1,4 +1,6 @@
 import * as React from 'react'
+import * as Reflux from 'reflux'
+import * as _ from 'lodash'
 import Toolbar from '../components/toolbar'
 
 let Create = React.createClass({
@@ -9,7 +11,7 @@ let Create = React.createClass({
 			{id: 'create'},
 			title,
 			React.createElement(Toolbar, {tools: ['Create new Game', 'Create new Map']}))
-	}
+	},
 })
 
 export default Create

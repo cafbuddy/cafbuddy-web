@@ -1,30 +1,43 @@
-var dest = "./build/";
+var dest = './build/';
 var src = './app/';
+var lib = './lib/';
 
 module.exports = {
 	browserSync: {
+		open: true,
 		server: {
-			// We're serving the src folder as well
-			// for sass sourcemap linking
-			baseDir: [dest, src]
+			baseDir: dest
 		},
 		files: [
-			dest + "**",
+			dest + '**',
 			// Exclude Map files
-			"!" + dest + "**.map"
-		]
+			'!' + dest + '**.map',
+		],
+	},
+	lint: {
+		// src: `{${src},gulp}**/*.js`, in es6 template syntax
+		src: '{' + src + ',gulp}' + '**/*.js',
 	},
 	sass: {
-		src: src + "sass/**/*.{sass,scss}",
-		dest: dest
+		src: src + 'sass/**/*.{sass,scss}',
+		dest: dest,
+		browsers: ['last 1 version'],
+	},
+	icons: {
+		src: [src + 'icons/*'],
+		dest: [dest + 'icons'],
 	},
 	images: {
-		src: src + "images/**",
-		dest: dest + "images"
+		src: src + 'images/**',
+		dest: dest + 'images',
+	},
+	parse: {
+		src: lib + '*',
+		dest: dest,
 	},
 	markup: {
-		src: src + "htdocs/*",
-		dest: dest
+		src: src + 'htdocs/*',
+		dest: dest,
 	},
 	browserify: {
 		// Enable source maps
@@ -36,7 +49,7 @@ module.exports = {
 		bundleConfigs: [{
 			entries: src + 'index.js',
 			dest: dest,
-			outputName: 'app.js'
-		}]
-	}
+			outputName: 'app.js',
+		}],
+	},
 };
