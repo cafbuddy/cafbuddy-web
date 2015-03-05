@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 
 let Create = React.createClass({
 	render() {
-		let title = React.createElement('h1', {className: 'view-title'}, 'Create New ...')
+		let title = React.createElement('h1', {className: 'view-title'}, 'Create New Meal')
 
 		return React.createElement('div',
 			{id: 'create'},
